@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <style>
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+        }
+        .block {
+            height: 18vmin; width: 18vmin;
+            background-color: aliceblue;
+            margin-left: 1vmin;margin-right: 1vmin;margin-bottom: 1vmin;margin-top: 1vmin;
+            border-radius: 1.5vmin;
+            font-size: 10vmin;
+            color: rgb(189, 11, 11);
+            cursor: pointer;
+            padding-top: 2vmin;
+        }
+        #reset {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body style="background-color: #002A32;text-align: center;justify-content: center;">
+
+    <h1 style="color: azure;text-align: center;margin :20px;">Tic-Tac-Toe Game !</h1>
+
+    <div class="box" style="height: 70vh; display: flex ;justify-content: center;align-items: center" >
+        <div class="grid" style="height: 60vmin; width: 80vmin ; display: flex; flex-wrap: wrap;justify-content: center;align-items: center;">
+
+            <div class="block" data-index="0"></div>
+            <div class="block" data-index="1"></div>
+            <div class="block" data-index="2"></div>
+            <div class="block" data-index="3"></div>
+            <div class="block" data-index="4"></div>
+            <div class="block" data-index="5"></div>
+            <div class="block" data-index="6"></div>
+            <div class="block" data-index="7"></div>
+            <div class="block" data-index="8"></div>
+
+        </div>
+
+    </div>
+
+    <button id="reset">Reset</button>
+
+    <script>
+
+        let grid = document.querySelectorAll(".block");
+        let reset = document.querySelector("#reset");
+
+        let player0 = true;
+
+        // 2-D array with winning patterns
+        const winpatten = [ [0, 1, 2], [0, 3, 6], [0, 4, 8], [1, 4, 7], [2, 5, 8],  [2, 4, 6],  [3, 4, 5], [6, 7, 8]  ];
+
+        grid.forEach(_block => {
+            _block.addEventListener("click", () => {
+                if (player0) {
+                    _block.textContent = 'O'; 
+                    player0 = false;
+                } 
+                else {
+                    _block.textContent = 'X'; 
+                    player0 = true;
+                }
+                block.disabled = true;
+                checkWin();
+            });
+        });
+
+        function checkWin() {
+        
+            let blocks = Array.from(grid).map(block => block.textContent);
+            winpatten.forEach(pattern => {
+                const [a, b, c] = pattern;
+                if (blocks[a] && blocks[a] === blocks[b] && blocks[a] === blocks[c]) {
+                    console.log(`Player ${blocks[a]} wins!`);
+                    alert(`Player ${blocks[a]} wins!`);.
+                    grid.forEach(block => block.style.pointerEvents = 'none'); 
+                }
+            });
+        }
+
+        reset.addEventListener("click", () => {
+            grid.forEach(_block => {
+                _block.textContent = ''; 
+                _block.style.pointerEvents = 'auto'; 
+            });
+            player0 = true; 
+        });
+
+    </script>
+</body>
+</html>
